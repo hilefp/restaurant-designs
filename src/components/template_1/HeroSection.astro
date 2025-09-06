@@ -1,0 +1,119 @@
+---
+import MenuNav from './MenuNav.astro';
+import { templates } from '../../config/templates';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  videoSrc?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  brandName?: string;
+  navItems?: Array<{ name: string; href: string; }>;
+  reservationText?: string;
+  reservationLink?: string;
+}
+
+const {
+  title = templates['papariccos'].title,
+  subtitle = templates['papariccos'].subtitle,
+  description = templates['papariccos'].description,
+  ctaText = "View Our Menu",
+  ctaLink = templates['papariccos'].ctaLink,
+  videoSrc = templates['papariccos'].videoSrc || null,
+  imageSrc = templates['papariccos'].imageSrc,
+  imageAlt = "Restaurant food",
+  brandName = templates['papariccos'].brandName,
+  navItems = templates['papariccos'].navItems,
+  
+  reservationText = templates['papariccos'].reservationText,
+  reservationLink = templates['papariccos'].reservationLink
+} = Astro.props;
+
+const hasVideo = videoSrc && !imageSrc;
+const hasImage = imageSrc && !videoSrc;
+---
+
+<section class="relative min-h-screen flex flex-col overflow-hidden">
+  <!-- Background Video -->
+  {hasVideo && (
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src={videoSrc} type="video/mp4" />
+    </video>
+  )}
+  
+  <!-- Background Image -->
+  {hasImage && (
+    <img
+      src={imageSrc}
+      alt={imageAlt}
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+  )}
+  
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 hero-overlay"></div>
+  
+  <!-- Additional Text Enhancement Overlay -->
+  <div class="absolute top-0 left-0 h-[50vh] w-full bg-gradient-to-b from-black/30 via-black/20 to-black/0"></div>
+
+  
+  <!-- Navigation -->
+
+  <MenuNav navItems={navItems} reservationText={reservationText} reservationLink={reservationLink} brandName={brandName} />
+  
+  <!-- Hero Content -->
+  <div class="relative z-10 flex-1 flex items-end px-6 pb-24 md:px-12 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-8xl mx-auto">
+      <!-- Left Content -->
+      <div class="flex flex-col lg:flex-row justify-between w-full">
+        <div class="space-y-6">
+          {subtitle && (
+            <p class="hero-subtitle text-lg md:text-xl font-medium tracking-wide">
+              {subtitle}
+            </p>
+          )}
+          
+          <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            {title}
+          </h1>
+          
+          <p class="hero-description text-lg md:text-xl leading-relaxed max-w-2xl">
+            {description}
+          </p>
+        </div>
+        
+        <div class="pt-4 lg:hidden">
+          <a
+            href={ctaLink}
+            class="inline-block primary-button px-8 py-4 text-lg font-medium transition-colors duration-300 transform hover:scale-105"
+          >
+            {ctaText}
+          </a>
+        </div>
+      </div>
+      
+      <!-- Right Content (Optional - for additional content or spacing) -->
+      <div class="hidden lg:flex lg:justify-end lg:items-center pr-24">
+        <!-- This space can be used for additional content or left empty for better composition -->
+        <div class="pt-4">
+          <a
+            href={ctaLink}
+            class="inline-block primary-button px-8 py-4 text-lg font-medium transition-colors duration-300 transform hover:scale-105"
+          >
+            {ctaText}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,232 @@
+---
+
+export interface Props {
+  navItems: Array<{ name: string; href: string }>;
+  reservationText: string;
+  reservationLink: string;
+  brandName: string;
+}
+
+const { navItems, reservationText, reservationLink, brandName } = Astro.props;
+---
+
+<nav class="relative z-10 flex justify-between items-center px-6 py-6 md:px-12 w-full">
+    
+  <div class="brand-text text-xl md:text-4xl font-bold tracking-wider">
+    <a href="/">
+    {brandName}
+    </a>
+  </div>
+
+  <div class="hidden md:flex items-center space-x-8 w-full justify-end">
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="nav-link transition-colors duration-300 text-lg"
+        >
+          {item.name}
+        </a>
+      ))
+    }
+
+    <a
+      href={reservationLink}
+      class="primary-button px-6 py-2 transition-colors duration-300"
+    >
+      {reservationText}
+    </a>
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button id="mobile-menu-toggle" class="md:hidden nav-link z-50 relative">
+    <svg id="hamburger-icon" class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+    <svg id="close-icon" class="w-6 h-6 absolute inset-0 transition-transform duration-300 scale-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 bg-primary-color z-40 md:hidden transform translate-x-full transition-transform duration-500 ease-in-out">
+  
+  <!-- Close Button -->
+  <button id="mobile-menu-close" class="absolute top-6 right-6 nav-link z-50 p-2 hover:scale-110 transition-transform duration-300">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+  
+  <div class="flex flex-col items-center justify-center h-full space-y-8 px-6">
+    
+    <!-- Brand Name in Mobile Menu -->
+    <div class="brand-text text-3xl font-bold tracking-wider mb-8">
+      <a href="/">
+        {brandName}
+      </a>
+    </div>
+    
+    <!-- Mobile Navigation Links -->
+    <div class="flex flex-col items-center space-y-6">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="mobile-nav-link nav-link text-2xl font-medium tracking-wide transition-all duration-300 hover:scale-110"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+    
+    <!-- Mobile Reservation Button -->
+    <a
+      href={reservationLink}
+      class="primary-button px-8 py-4 text-xl font-medium transition-all duration-300 transform hover:scale-105 mt-8"
+    >
+      {reservationText}
+    </a>
+  </div>
+</div>
+
+<script>
+  // Mobile menu functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    let isMenuOpen = false;
+    
+    function toggleMobileMenu() {
+      isMenuOpen = !isMenuOpen;
+      
+      if (isMenuOpen) {
+        // Open menu
+        mobileMenu.classList.remove('translate-x-full');
+        mobileMenu.classList.add('translate-x-0');
+        hamburgerIcon.classList.add('scale-0');
+        closeIcon.classList.remove('scale-0');
+        closeIcon.classList.add('scale-100');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+      } else {
+        // Close menu
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+        hamburgerIcon.classList.remove('scale-0');
+        hamburgerIcon.classList.add('scale-100');
+        closeIcon.classList.add('scale-0');
+        closeIcon.classList.remove('scale-100');
+        
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+      }
+    }
+    
+    // Toggle menu on button click
+    if (mobileMenuToggle) {
+      mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Close menu on close button click
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Close menu when clicking on navigation links
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (isMenuOpen) {
+          toggleMobileMenu();
+        }
+      });
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isMenuOpen) {
+        toggleMobileMenu();
+      }
+    });
+    
+    // Close menu on window resize if desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        toggleMobileMenu();
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Mobile menu styling */
+  .mobile-menu {
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Smooth transitions for icons */
+  #hamburger-icon,
+  #close-icon {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Mobile menu animations */
+  .mobile-nav-link {
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideInUp 0.6s ease-out forwards;
+  }
+  
+  .mobile-nav-link:nth-child(1) { animation-delay: 0.1s; }
+  .mobile-nav-link:nth-child(2) { animation-delay: 0.2s; }
+  .mobile-nav-link:nth-child(3) { animation-delay: 0.3s; }
+  .mobile-nav-link:nth-child(4) { animation-delay: 0.4s; }
+  
+  @keyframes slideInUp {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Ensure mobile menu is above everything */
+  .mobile-menu {
+    z-index: 40;
+  }
+  
+  #mobile-menu-toggle {
+    z-index: 50;
+  }
+  
+  /* Mobile menu button hover effect */
+  #mobile-menu-toggle:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Scale animations for icons */
+  .scale-0 {
+    transform: scale(0);
+  }
+  
+  .scale-100 {
+    transform: scale(1);
+  }
+</style>
