@@ -1,0 +1,135 @@
+---
+import MenuNav from './MenuNav.astro';
+
+export interface Props {
+  isPage?: boolean;
+  title?: string;
+}
+
+const navItems = [
+  { name: "Menu", href: "/menu" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" }
+];
+const reservationText = "Order Online";
+const reservationLink = "/reservations"
+const brandName = "Papa Ricco's";
+
+const { isPage = true, title = "GALLERY" } = Astro.props;
+
+const galleryImages = [
+  {
+    src: "/src/assets/photos/template_1/2_image.jpg",
+    alt: "Chef spreading sauce on fresh pizza dough",
+    caption: "Handcrafted with Love"
+  },
+  {
+    src: "/src/assets/photos/template_1/3_image.jpg",
+    alt: "Delicious pizza slices with mushrooms and pepperoni on wooden board",
+    caption: "Authentic Italian Flavors"
+  },
+  {
+    src: "/src/assets/photos/template_1/4_image.jpg",
+    alt: "Person enjoying fresh pizza with basil and tomatoes",
+    caption: "Fresh Ingredients Daily"
+  },
+  {
+    src: "/src/assets/photos/template_1/5_image.jpg",
+    alt: "Pizza being cut with traditional pizza cutter",
+    caption: "Traditional Methods"
+  }
+];
+---
+
+<section class={`${isPage ? 'pb-16 px-6 md:px-12 bg-primary-color h-auto w-full' : 'py-16 px-6 md:px-12 bg-primary-color h-auto w-full'}`}>
+  <!-- Navigation -->
+  {isPage && (
+    <div class="w-full">
+      <MenuNav navItems={navItems} reservationText={reservationText} reservationLink={reservationLink} brandName={brandName} />
+    </div>
+  )}
+
+  <div class={`max-w-6xl mx-auto${isPage ? '' : ' border-t border-white/10 pt-16'}`}>
+    <!-- Gallery Header -->
+
+
+    <!-- Image Grid -->
+    <div class="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-2 lg:gap-4">
+      {galleryImages.map((image, index) => (
+        <div class="gallery-item group relative overflow-hidden bg-black/20 rounded-lg">
+          <!-- Image -->
+          <img
+            src={image.src}
+            alt={image.alt}
+            class="w-full h-64 md:h-80 lg:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          
+          <!-- Overlay -->
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 w-full">
+              <h3 class="hero-subtitle text-lg md:text-xl font-medium tracking-wide">
+                {image.caption}
+              </h3>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-16">
+      <div class="space-y-6">
+        <h3 class="hero-title text-2xl md:text-3xl font-bold tracking-wide">
+          Ready to Experience Papa Ricco's?
+        </h3>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a
+            href="/menu"
+            class="inline-block primary-button px-8 py-4 text-lg font-medium transition-colors duration-300 transform hover:scale-105"
+          >
+            View Our Menu
+          </a>
+          <a
+            href="/reservations"
+            class="inline-block primary-button px-8 py-4 text-lg font-medium transition-colors duration-300 transform hover:scale-105"
+          >
+            Order Online
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery-item {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .gallery-item:hover {
+    border-color: var(--accent-color);
+  }
+  
+  .gallery-grid {
+    /* Ensure consistent aspect ratios */
+  }
+  
+  
+  /* Large screens - optional 2x2 grid */
+  @media (min-width: 1024px) {
+    .gallery-item:nth-child(1) {
+      /* First image can span if desired */
+    }
+  }
+  
+  /* Hover effects */
+  .gallery-item img {
+    filter: brightness(0.9);
+  }
+  
+  .gallery-item:hover img {
+    filter: brightness(1.1);
+  }
+</style>

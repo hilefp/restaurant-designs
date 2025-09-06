@@ -1,0 +1,30 @@
+---
+import { templates } from '../../config/templates';
+import MenuNav from './MenuNav.astro';
+import MenuReact from './MenuReact.tsx';
+import type { MenuCategory } from './MenuReact.tsx';
+
+export interface Props {
+  categories?: MenuCategory[];
+  isPage?: boolean;
+}
+
+const navItems = templates['papariccos'].navItems;
+const reservationText = templates['papariccos'].reservationText;
+const reservationLink = templates['papariccos'].reservationLink;
+const brandName = templates['papariccos'].brandName;
+
+const { categories, isPage = true } = Astro.props;
+---
+
+<section class={`${isPage ? 'pb-16 px-6 md:px-12 bg-primary-color min-h-[calc(100dvh)] w-full' : 'py-16 px-6 md:px-12 bg-primary-color h-auto w-full'}`}>
+    <!-- Logo -->
+  {isPage && (
+    <div class="w-full">
+      <MenuNav navItems={navItems} reservationText={reservationText} reservationLink={reservationLink} brandName={brandName} />
+    </div>
+  )}
+
+  <MenuReact categories={categories} client:load />
+</section>
+

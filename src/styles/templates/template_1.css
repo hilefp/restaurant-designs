@@ -1,0 +1,56 @@
+/* Papa Ricco's Template - Italian Pizzeria Theme */
+:root {
+  --primary-color: #321108  ; /* Copper - warm, rustic */
+  --secondary-color: #2B2A28; /* Rojo Vino - deep, elegant */
+  --accent-color: #C9A349; /* Dorado Suave - luxury accent */
+  --text-color: rgb(255 255 255); /* white */
+  --background-color: rgb(0 0 0); /* black */
+  --overlay-color: linear-gradient(to top, rgba(50, 17, 8, 1) 0%, rgba(50, 17, 8, 1) 20%, transparent 100%);
+}
+
+.hero-background {
+  background: var(--background-color);
+}
+
+ .hero-overlay {
+  background: var(--overlay-color);
+}
+
+ .brand-text {
+  color: var(--text-color);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+ .nav-link {
+  color: var(--text-color);
+}
+
+ .nav-link:hover {
+  color: var(--accent-color);
+}
+
+ .primary-button {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+ .primary-button:hover {
+  background-color: var(--secondary-color);
+}
+
+ .hero-title {
+  color: var(--text-color);
+}
+
+ .hero-subtitle {
+  color: var(--accent-color);
+}
+
+ .hero-description {
+  color: rgb(229 231 235); /* gray-200 */
+}
+
+.bg-primary-color {
+  background-color: var(--primary-color);
+}
+

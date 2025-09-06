@@ -1,0 +1,134 @@
+---
+import MenuNav from './MenuNav.astro';
+
+export interface Props {
+  isPage?: boolean;
+}
+
+const { isPage = true } = Astro.props;
+
+const navItems = [
+  { name: "Menu", href: "/menu" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" }
+];
+const reservationText = "Order Online";
+const reservationLink = "/reservations"
+const brandName = "Papa Ricco's";
+---
+
+<section class={`bg-primary-color ${isPage ? 'pb-16 px-6 md:px-12 h-auto w-full' : 'py-16 px-6 md:px-12 h-auto w-full'}`}>
+  <!-- Navigation -->
+  {isPage && (
+    <div class="w-full">
+      <MenuNav navItems={navItems} reservationText={reservationText} reservationLink={reservationLink} brandName={brandName} />
+    </div>
+  )}
+
+  <div class={`max-w-6xl mx-auto${isPage ? '' : ' border-t border-white/10 pt-16'}`}>
+    <!-- About Header -->
+    <div class="text-center mb-16">
+      <h2 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold mb-8 tracking-wider">
+        ABOUT US
+      </h2>
+    </div>
+
+    <!-- Hero Promise Section -->
+    <div class="text-center mb-20">
+      <h3 class="hero-subtitle text-2xl md:text-3xl font-bold tracking-wider mb-8">
+        Our Promise: Fresh, Authentic, Unforgettable
+      </h3>
+      <p class="hero-description text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
+        At Papa Ricco's, every dish tells a story of tradition and craftsmanship. We select only the finest ingredients—garden-fresh vegetables, lean meats, and part-skim mozzarella—to create meals that are as wholesome as they are indulgent. No preservatives. No shortcuts. Only pure, authentic Italian flavor.
+      </p>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+      
+      <!-- The Art of Pizza -->
+      <div class="about-section">
+        <h4 class="hero-subtitle text-xl md:text-2xl font-medium tracking-wide mb-6">
+          The Art of Pizza
+        </h4>
+        <p class="hero-description text-lg leading-relaxed">
+          Our dough is prepared fresh daily, hand-crafted with care and baked to perfection. From our signature pepperoni to delicate vegetarian creations, every bite is made to delight your palate while staying true to the heart of Italian cooking.
+        </p>
+      </div>
+
+      <!-- Image Section -->
+      <div class="about-image-container">
+        <div class="overflow-hidden rounded-lg border border-white/10">
+          <img 
+            src="src/assets/photos/template_1/1_image.png" 
+            alt="Papa Ricco's authentic Italian cooking" 
+            class="w-full h-80 object-cover transition-transform duration-500 hover:scale-105"
+          />
+        </div>
+      </div>
+
+      <!-- Dining, Delivery & Catering -->
+      <div class="about-section">
+        <h4 class="hero-subtitle text-xl md:text-2xl font-medium tracking-wide mb-6">
+          Dining, Delivery & Catering
+        </h4>
+        <p class="hero-description text-lg leading-relaxed mb-6">
+          Whether you join us in our warm, welcoming dining room or enjoy your meal at home, we are dedicated to serving you with excellence.
+        </p>
+        <div class="space-y-4">
+          <div class="service-item">
+            <h5 class="hero-title text-lg font-medium mb-2">Delivery</h5>
+            <p class="hero-description text-base">Hot, fresh, and right to your door (minimum order $15).</p>
+          </div>
+          <div class="service-item">
+            <h5 class="hero-title text-lg font-medium mb-2">Catering</h5>
+            <p class="hero-description text-base">From office lunches to private celebrations, let us bring the soul of Italy to your special event.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complete Italian Experience -->
+      <div class="about-section">
+        <h4 class="hero-subtitle text-xl md:text-2xl font-medium tracking-wide mb-6">
+          A Complete Italian Experience
+        </h4>
+        <p class="hero-description text-lg leading-relaxed">
+          Pair your meal with a glass of wine or beer, and don't forget to indulge in our homemade desserts. Every detail is designed to transport you to the streets of Rome, Naples, or Florence—without ever leaving Miami.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding: 2rem 0;
+  }
+  
+  .service-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .service-item:last-child {
+    border-bottom: none;
+  }
+  
+  .about-image-container img {
+    filter: brightness(0.9);
+  }
+  
+  .about-image-container:hover img {
+    filter: brightness(1.1);
+  }
+  
+  /* Subtle hover effects for sections */
+  .about-section {
+    transition: transform 0.3s ease;
+  }
+  
+  .about-section:hover {
+    transform: translateY(-2px);
+  }
+</style>

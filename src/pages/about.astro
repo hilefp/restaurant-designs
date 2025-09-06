@@ -1,0 +1,14 @@
+---
+
+import AboutComponent from '../components/template_1/AboutUs.astro';
+import Footer from '../components/template_1/Footer.astro';
+import Gallery from '../components/template_1/Gallery.astro';
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="DELIYUMEATY - Premium Restaurant">
+	<AboutComponent isPage={true} />
+    <Gallery isPage={false} />
+	<Footer  />
+</Layout>
