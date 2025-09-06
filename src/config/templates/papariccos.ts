@@ -12,7 +12,7 @@ export const PAPARICCOSS_CONFIG = {
     background: "black"
   },
   //videoSrc: "/src/assets/videos/2-template_2.mp4",
-  imageSrc: "/src/assets/photos/template_1/heade_image.jpg",
+  imageSrc: "https://pub-fe385b1228f447ba8f3918d974373c55.r2.dev/template_1/heade_image.jpg",
   navItems: [
     { name: "Menu", href: "/menu" },
     { name: "About", href: "/about" },
